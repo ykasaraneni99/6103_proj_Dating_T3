@@ -33,18 +33,25 @@ new_dating_data = new_data.dropna()
 
 # %%
 
-## for body type for diet
+## body type for people who are in diet
 
 data =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="diet", ascending=False))
 data["% of participants"]=(data["diet"]/data["diet"].sum())*100
+data
 
 #%%
-## for body type for drinks
+## body type for people who drink
 
 data_d =(new_dating_data.groupby("body_type")[["drinks"]].count().sort_values(by="drinks", ascending=False))
 data_d["% of participants"]=(data_d["drinks"]/data_d["drinks"].sum())*100
+data_d
 
+#%%
+## body type for people who take drugs
 
+data_drug =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="drugs", ascending=False))
+data_drug["% of participants"]=(data_drug["drugs"]/data_drug["drugs"].sum())*100
+data_drug
 
 #%%
 import matplotlib as plt
