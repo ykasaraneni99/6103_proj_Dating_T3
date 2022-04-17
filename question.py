@@ -32,3 +32,26 @@ new_data['drugs'].isnull().sum()
 new_dating_data = new_data.dropna()  
 
 # %%
+
+## for body type for diet
+
+data =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="diet", ascending=False))
+data["% of participants"]=(data["diet"]/data["diet"].sum())*100
+
+#%%
+## for body type for drinks
+
+data_d =(new_dating_data.groupby("body_type")[["drinks"]].count().sort_values(by="drinks", ascending=False))
+data_d["% of participants"]=(data_d["drinks"]/data_d["drinks"].sum())*100
+
+
+
+#%%
+import matplotlib as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 5))
+sns.countplot(x='body_type', data=new_dating_data,
+hue='sex',
+order=new_dating_data['body_type'].value_counts().iloc[:10].index)
+# %%
