@@ -62,3 +62,15 @@ sns.countplot(x='body_type', data=new_dating_data,
 hue='sex',
 order=new_dating_data['body_type'].value_counts().iloc[:10].index)
 # %%
+
+plt.figure(figsize=(15, 5))
+sns.countplot(x='drinks', data=new_dating_data,
+hue='sex',
+order=new_dating_data['drinks'].value_counts().iloc[:10].index)
+# %%
+
+plt.figure(figsize=(15, 5))
+sns.countplot(x='drugs', data=new_dating_data,
+hue='sex',
+order=new_dating_data['drugs'].value_counts().iloc[:10].index)
+# %%
