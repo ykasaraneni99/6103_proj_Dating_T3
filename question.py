@@ -16,7 +16,7 @@ dating = pd.read_csv("okcupid_profiles.csv")
 #dating.drop(['essay1'], axis =1)
 
 # dropping all the unequired columns.
-new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','smokes','pets','last_online','income',
+new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
  
@@ -31,8 +31,7 @@ new_data['drugs'].isnull().sum()
 # Droping all the column which has NAN values
 new_dating_data = new_data.dropna()  
 
-# %%
-
+#%%
 ## body type for people who are in diet
 
 data =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="diet", ascending=False))
@@ -52,6 +51,11 @@ data_d
 data_drug =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="drugs", ascending=False))
 data_drug["% of participants"]=(data_drug["drugs"]/data_drug["drugs"].sum())*100
 data_drug
+
+#%%
+data_smoke =(new_dating_data.groupby("body_type")[["smokes"]].count().sort_values(by="smokes", ascending=False))
+data_smoke["% of participants"]=(data_smoke["smokes"]/data_smoke["smokes"].sum())*100
+data_smoke
 
 #%%
 import matplotlib as plt
