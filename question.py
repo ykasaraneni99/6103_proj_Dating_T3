@@ -56,11 +56,12 @@ data_drug
 #%%
 import matplotlib as plt
 import seaborn as sns
+from matplotlib.pyplot import figure
 
 plt.figure(figsize=(10, 5))
-sns.countplot(x='body_type', data=new_dating_data,
+sns.countplot(x='diet', data=new_dating_data,
 hue='sex',
-order=new_dating_data['body_type'].value_counts().iloc[:10].index)
+order=new_dating_data['diet'].value_counts().iloc[:10].index)
 # %%
 
 plt.figure(figsize=(15, 5))
