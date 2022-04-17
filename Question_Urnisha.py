@@ -2,5 +2,5 @@
 #%%
 import pandas as pd 
 dating = pd.read_csv("/Users/urnishabhuiyan/Documents/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-
+okcupid = dating.filter(["age", "status", "sex", "orientation", "body_type", "diet", "drinks", "drugs"], axis=1)
 # %%
