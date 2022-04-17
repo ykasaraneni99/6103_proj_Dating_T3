@@ -32,6 +32,12 @@ new_data['drugs'].isnull().sum()
 new_dating_data = new_data.dropna()  
 
 #%%
+replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
+            'drinks':{'socially':15,"often":16,"not at all":17,"rarely":18, "very often":19},
+           }
+
+df_dating=new_dating_data.replace(replace_ty)
+#%%
 ## body type for people who are in diet
 
 data =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="diet", ascending=False))
@@ -63,15 +69,15 @@ import seaborn as sns
 from matplotlib.pyplot import figure
 
 plt.figure(figsize=(10, 5))
-sns.countplot(x='diet', data=new_dating_data,
+sns.countplot(x='diet', data=df_dating,
 hue='sex',
-order=new_dating_data['diet'].value_counts().iloc[:10].index)
+order=df_dating['diet'].value_counts().iloc[:10].index)
 # %%
 
 plt.figure(figsize=(15, 5))
-sns.countplot(x='drinks', data=new_dating_data,
+sns.countplot(x='drinks', data=df_dating,
 hue='sex',
-order=new_dating_data['drinks'].value_counts().iloc[:10].index)
+order=df_dating['drinks'].value_counts().iloc[:10].index)
 # %%
 
 plt.figure(figsize=(15, 5))
