@@ -60,20 +60,20 @@ data
 #%%
 ## body type for people who drink
 
-data_d =(new_dating_data.groupby("drinks")[["body_type"]].count()) #.sort_values(by="body_type", ascending=False))
-data_d["% of participants"]=(data_d["body_type"]/data_d["body_type"].sum())*100
+data_d =(new_dating_data.groupby("body_type")[["drinks"]].count().sort_values(by="body_type", ascending=False))
+data_d["% of participants"]=(data_d["drinks"]/data_d["drinks"].sum())*100
 data_d
 
 
 #%%
 ## body type for people who take drugs
 
-data_drug =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="drugs", ascending=False))
-data_drug["% of participants"]=(data_drug["drugs"]/data_drug["drugs"].sum())*100
+data_drug =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="body_type", ascending=True))
+data_drug["% of participants"]=(data_drug["diet"]/data_drug["diet"].sum())*100
 data_drug
 
 #%%
-data_smoke =(new_dating_data.groupby("body_type")[["smokes"]].count().sort_values(by="smokes", ascending=False))
+data_smoke =(new_dating_data.groupby("body_type")[["smokes"]].count().sort_values(by="body_type", ascending=False))
 data_smoke["% of participants"]=(data_smoke["smokes"]/data_smoke["smokes"].sum())*100
 data_smoke
 
