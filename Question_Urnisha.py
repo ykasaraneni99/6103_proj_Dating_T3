@@ -20,7 +20,7 @@ def new_status(row):
     status = row["status"]
     if status == "single": return "No"
     if status == "seeing someone": return "Yes"
-    if status == "available": return "Yes"
+    if status == "available": return "No"
     if status == "married": return "Yes"
     if status == "unknown": return "No"
     if status == "simple and potent people met in everyday life ... (which especially includes infants and children) athlete": return np.nan
@@ -61,4 +61,6 @@ from statsmodels.formula.api import glm
 
 modelStatusLogitFit = glm(formula='taken ~ age+C(orientation)+C(sex)', data=okcupid, family=sm.families.Binomial()).fit()
 print( modelStatusLogitFit.summary() )
+newdata = {"age":27 , "orientation":"Straight", "sex":"Female"}
+print("Probability of Seeing Someone Else:", modelStatusLogitFit.predict(newdata))
 # %%
