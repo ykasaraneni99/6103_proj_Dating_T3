@@ -69,8 +69,8 @@ data_d
 #%%
 ## body type for people who take drugs
 
-data_drug =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="body_type", ascending=True))
-data_drug["% of participants"]=(data_drug["diet"]/data_drug["diet"].sum())*100
+data_drug =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="body_type", ascending=True))
+data_drug["% of participants"]=(data_drug["drugs"]/data_drug["drugs"].sum())*100
 data_drug
 
 #%%
@@ -132,6 +132,40 @@ plt.figure(figsize=(10, 5))
 sns.countplot(y='drugs', data=df_dating,
 hue='sex', palette='Reds',
 order=df_dating['drugs'].value_counts().iloc[:10].index)
+
+#%%
+plt.figure(figsize=(10, 6))
+sns.countplot(x='body_type', data=df_dating,
+hue='smokes',
+order=df_dating['body_type'].value_counts().iloc[:10].index)
+
+plt.figure(figsize=(10, 5))
+sns.countplot(y='smokes', data=df_dating,
+hue='sex', palette='Oranges',
+order=df_dating['smokes'].value_counts().iloc[:10].index)
 # %%
+# Let's try logistic regression again with sklearn 
+
+# Prepare our X data (features, predictors, regressors) and y data (target, dependent variable)
+xdata = df_dating[['diet','drinks','smokes','drugs']]
+ydata = df_dating['body_type']
+print(type(xdata))
+print(type(ydata))
+# These xdfadmit and ydfadmit are dataframes
+
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 )
+
+print('x_train type',type(x_train))
+print('x_trainshape',x_train.shape)
+print('x_test type',type(x_test))
+print('x_test shape',x_test.shape)
+print('y_train type',type(y_train))
+print('y_train shape',y_train.shape)
+print('y_test type',type(y_test))
+print('y_test shape',y_test.shape)
+
+print("\nReady to continue.")
 
 # %%
