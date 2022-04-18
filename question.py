@@ -170,3 +170,37 @@ print('y_test shape',y_test.shape)
 print("\nReady to continue.")
 
 # %%
+from sklearn.linear_model import LogisticRegression
+
+logitr = LogisticRegression()  # instantiate
+logitr.fit(x_train, y_train)
+print('Logit model accuracy (with the test set):', logitr.score(x_test, y_test))
+print('Logit model accuracy (with the train set):', logitr.score(x_train, y_train))
+
+print("\nReady to continue.")
+
+#%%
+print(logitr.predict(x_test))
+
+print("\nReady to continue.")
+
+#%%
+print(logitr.predict_proba(x_train[:8]))
+print(logitr.predict_proba(x_test[:8]))
+
+print("\nReady to continue.")
+
+#%%
+test = logitr.predict_proba(x_test)
+type(test)
+
+print("\nReady to continue.")
+
+# %%
+
+# classification_report
+
+from sklearn.metrics import classification_report
+y_true, y_pred = y_test, logitr.predict(x_test)
+print(classification_report(y_true, y_pred))
+# %%
