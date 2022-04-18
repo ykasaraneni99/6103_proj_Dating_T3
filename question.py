@@ -16,14 +16,20 @@ from hvplot import hvPlot
 dating = pd.read_csv("okcupid_profiles.csv")
 
 
-#dating.drop(['education'], axis=1)
-#dating.drop(['essay0'], axis=1)
-#dating.drop(['essay1'], axis =1)
-
 # dropping all the unequired columns.
 new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
+
+new_data.isna().sum()
+
+new_data_a = new_data.dropna(thresh = 13, how = 'any')
+new_data_a.isna().sum()
+
+
+new_data.describe()
+
+new_data.dtypes
  
 
 #%%
