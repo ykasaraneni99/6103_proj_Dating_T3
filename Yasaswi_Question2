@@ -1,3 +1,4 @@
+#Q2. How does diet, drinking, drugs, and smoking impact one's body type?
 #%%
 import pandas as pd 
 dating = pd.read_csv("/Users/yasaswikasaraneni/Documents/GW/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
