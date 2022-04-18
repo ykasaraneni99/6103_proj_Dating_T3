@@ -35,4 +35,21 @@ def new_sex(row):
     return sex 
 okcupid["sex"] = okcupid.apply(new_sex, axis=1)
 print(okcupid.sex.value_counts())
+
+def new_age(row):
+    age = row["age"]
+    try: age = int(age) 
+    except: pass
+    try: 
+        if not isinstance(age,int) : age = float(age)  
+    except: pass
+  
+    if ( isinstance(age,int) or isinstance(age,float) ) and not isinstance(age, bool): return ( age if age>=0 else np.nan )
+    if isinstance(age, bool): return np.nan
+    
+    age = age.strip()
+    if age == "st teachers; the powerfully humble": return np.nan
+    return age 
+okcupid["age"] = okcupid.apply(new_age, axis=1)
+print(okcupid.age.value_counts())
 # %%
