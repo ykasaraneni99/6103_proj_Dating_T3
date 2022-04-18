@@ -3,7 +3,7 @@
 import pandas as pd 
 import numpy as np
 dating = pd.read_csv("/Users/urnishabhuiyan/Documents/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-okcupid = dating.filter(["age", "status", "sex", "orientation", "body_type", "diet", "drinks", "drugs", "height"], axis=1)
+okcupid = dating.filter(["age", "status", "sex", "orientation"], axis=1)
 # %%
 #preprocessing the data 
 def new_orientation(row):
@@ -18,15 +18,16 @@ print(okcupid.orientation.value_counts())
 
 def new_status(row):
     status = row["status"]
-    if status == "single": return "Single"
-    if status == "seeing someone": return "Seeing Someone"
-    if status == "available": return "Available"
-    if status == "married": return "Married"
-    if status == "unknown": return np.nan
+    if status == "single": return "No"
+    if status == "seeing someone": return "Yes"
+    if status == "available": return "Yes"
+    if status == "married": return "Yes"
+    if status == "unknown": return "No"
     if status == "simple and potent people met in everyday life ... (which especially includes infants and children) athlete": return np.nan
     return status 
 okcupid["status"] = okcupid.apply(new_status, axis=1)
-print(okcupid.status.value_counts())
+okcupid = okcupid.rename(columns={'status': 'taken'})
+print(okcupid.taken.value_counts())
 
 def new_sex(row):
     sex = row["sex"]
@@ -55,3 +56,9 @@ okcupid["age"] = okcupid.apply(new_age, axis=1)
 print(okcupid.age.value_counts())
 # %%
 #Attempting different data models to predict outcome 
+import statsmodels.api as sm 
+from statsmodels.formula.api import glm
+
+modelStatusLogitFit = glm(formula='taken ~ age+C(orientation)+C(sex)', data=okcupid, family=sm.families.Binomial()).fit()
+print( modelStatusLogitFit.summary() )
+# %%
