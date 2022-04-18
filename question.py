@@ -8,7 +8,6 @@
 import numpy as np
 import pandas as pd
 
-
 dating = pd.read_csv("okcupid_profiles.csv")
 
 
@@ -85,11 +84,14 @@ import seaborn as sns
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
 
+plt.figure(figsize=(15, 5))
+sns.set_theme(style="whitegrid")
+sns.boxenplot(x="body_type", y="age",data=df_dating)
 
-df_dating.plot('diet','body_type', kind='scatter', marker='o') 
-plt.ylabel('body type')
-plt.xlabel('diet')
-plt.show()
+#df_dating.plot('diet','body_type', kind='scatter', marker='o') 
+#plt.ylabel('body type')
+#plt.xlabel('diet')
+#plt.show()
 
 plt.figure(figsize=(10, 5))
 sns.countplot(x='body_type', data=df_dating,
@@ -110,25 +112,25 @@ order=df_dating['diet'].value_counts().iloc[:10].index)
 #%%
 
 plt.figure(figsize=(10, 6))
-sns.countplot(x='drinks', data=df_dating,
-hue='body_type',
-order=df_dating['drinks'].value_counts().iloc[:10].index)
+sns.countplot(x='body_type', data=df_dating,
+hue='drinks',
+order=df_dating['body_type'].value_counts().iloc[:10].index)
 
 plt.figure(figsize=(10, 5))
 sns.countplot(x='drinks', data=df_dating,
-hue='sex',
+hue='sex', palette='flare',
 order=df_dating['drinks'].value_counts().iloc[:10].index)
 
 # %%
 
 plt.figure(figsize=(10, 5))
-sns.countplot(x='drugs', data=df_dating,
-hue='body_type',
-order=df_dating['drugs'].value_counts().iloc[:10].index)
+sns.countplot(x='body_type', data=df_dating,
+hue='drugs',
+order=df_dating['body_type'].value_counts().iloc[:10].index)
 
 plt.figure(figsize=(10, 5))
-sns.countplot(x='drugs', data=df_dating,
-hue='sex',
+sns.countplot(y='drugs', data=df_dating,
+hue='sex', palette='Reds',
 order=df_dating['drugs'].value_counts().iloc[:10].index)
 # %%
 
