@@ -16,8 +16,9 @@ new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
 
+#%%
 new_data.isna().sum()
-
+#%%
 new_data_a = new_data.dropna(thresh = 13, how = 'any')
 new_data_a.isna().sum()
 
