@@ -18,16 +18,16 @@ print(okcupid.orientation.value_counts())
 
 def new_status(row):
     status = row["status"]
-    if status == "single": return "No"
-    if status == "seeing someone": return "Yes"
-    if status == "available": return "No"
-    if status == "married": return "Yes"
-    if status == "unknown": return "No"
+    if status == "single": return "Yes"
+    if status == "seeing someone": return "No"
+    if status == "available": return "Yes"
+    if status == "married": return "No"
+    if status == "unknown": return "Yes"
     if status == "simple and potent people met in everyday life ... (which especially includes infants and children) athlete": return np.nan
     return status 
 okcupid["status"] = okcupid.apply(new_status, axis=1)
-okcupid = okcupid.rename(columns={'status': 'taken'})
-print(okcupid.taken.value_counts())
+okcupid = okcupid.rename(columns={'status': 'single'})
+print(okcupid.single.value_counts())
 
 def new_sex(row):
     sex = row["sex"]
@@ -59,8 +59,15 @@ print(okcupid.age.value_counts())
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
 
-modelStatusLogitFit = glm(formula='taken ~ age+C(orientation)+C(sex)', data=okcupid, family=sm.families.Binomial()).fit()
+# modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
+# print( modelStatusLogitFit.summary() )
+
+modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)', data=okcupid, family=sm.families.Binomial()).fit()
 print( modelStatusLogitFit.summary() )
-newdata = {"age":27 , "orientation":"Straight", "sex":"Female"}
-print("Probability of Seeing Someone Else:", modelStatusLogitFit.predict(newdata))
+
+# modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
+# print( modelStatusLogitFit.summary() )
+
+newdata = {"age":26 , "orientation":"Gay", "sex":"Female"}
+print("Probability of Being Taken", modelStatusLogitFit.predict(newdata))
 # %%
