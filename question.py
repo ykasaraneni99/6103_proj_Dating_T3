@@ -7,11 +7,7 @@
 
 import numpy as np
 import pandas as pd
-import holoviews as hv
-import hvplot as hv
-import hvplot.pandas
-import holoviews as hv
-from hvplot import hvPlot
+
 
 dating = pd.read_csv("okcupid_profiles.csv")
 
@@ -87,6 +83,7 @@ data_smoke
 import matplotlib as plt
 import seaborn as sns
 from matplotlib.pyplot import figure
+import matplotlib.pyplot as plt
 
 
 df_dating.plot('diet','body_type', kind='scatter', marker='o') 
@@ -94,21 +91,45 @@ plt.ylabel('body type')
 plt.xlabel('diet')
 plt.show()
 
-#plt.figure(figsize=(10, 5))
+plt.figure(figsize=(10, 5))
+sns.countplot(x='body_type', data=df_dating,
+hue='drinks',
+order=df_dating['body_type'].value_counts().iloc[:10].index)
+
+#%%
+plt.figure(figsize=(10, 7))
+sns.countplot(x='body_type', data=df_dating,
+hue='diet',
+order=df_dating['body_type'].value_counts().iloc[:10].index)
+
+
+plt.figure(figsize=(10, 5))
 sns.countplot(x='diet', data=df_dating,
 hue='sex',
-order=df_dating['body_type'].value_counts().iloc[:10].index)
+order=df_dating['diet'].value_counts().iloc[:10].index)
 #%%
 
-plt.figure(figsize=(15, 5))
+plt.figure(figsize=(10, 6))
 sns.countplot(x='drinks', data=df_dating,
 hue='body_type',
 order=df_dating['drinks'].value_counts().iloc[:10].index)
 
+plt.figure(figsize=(10, 5))
+sns.countplot(x='drinks', data=df_dating,
+hue='sex',
+order=df_dating['drinks'].value_counts().iloc[:10].index)
+
 # %%
 
-plt.figure(figsize=(15, 5))
+plt.figure(figsize=(10, 5))
+sns.countplot(x='drugs', data=df_dating,
+hue='body_type',
+order=df_dating['drugs'].value_counts().iloc[:10].index)
+
+plt.figure(figsize=(10, 5))
 sns.countplot(x='drugs', data=df_dating,
 hue='sex',
 order=df_dating['drugs'].value_counts().iloc[:10].index)
+# %%
+
 # %%
