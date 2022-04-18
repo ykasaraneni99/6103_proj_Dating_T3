@@ -3,7 +3,7 @@
 import pandas as pd 
 import numpy as np
 dating = pd.read_csv("/Users/urnishabhuiyan/Documents/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-okcupid = dating.filter(["age", "status", "sex", "orientation", "body_type", "diet", "drinks", "drugs"], axis=1)
+okcupid = dating.filter(["age", "status", "sex", "orientation", "body_type", "diet", "drinks", "drugs", "height"], axis=1)
 # %%
 def new_orientation(row):
     orientation = row["orientation"]
