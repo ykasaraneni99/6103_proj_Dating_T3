@@ -1,10 +1,11 @@
-# How likely an individual is to be seeing someone else based on sex, sexual orientation, and height?
+# How likely an individual is to be seeing someone else based on sex, sexual orientation, and age?
 #%%
 import pandas as pd 
 import numpy as np
 dating = pd.read_csv("/Users/urnishabhuiyan/Documents/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
 okcupid = dating.filter(["age", "status", "sex", "orientation", "body_type", "diet", "drinks", "drugs", "height"], axis=1)
 # %%
+#preprocessing the data 
 def new_orientation(row):
     orientation = row["orientation"]
     if orientation == "straight": return "Straight"
@@ -53,3 +54,4 @@ def new_age(row):
 okcupid["age"] = okcupid.apply(new_age, axis=1)
 print(okcupid.age.value_counts())
 # %%
+#Attempting different data models to predict outcome 
