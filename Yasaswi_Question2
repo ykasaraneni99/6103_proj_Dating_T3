@@ -1,0 +1,17 @@
+#%%
+import pandas as pd 
+dating = pd.read_csv("/Users/yasaswikasaraneni/Documents/GW/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
+okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes"], axis=1)
+
+# %%
+new_okcupid = okcupid.dropna()  
+# %%
+replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":3,"thin":4, 'fit':5, 'curvy':6, 'full figured':7, 'jacked':8, 'overweight':9, 'used up':10, 'rather not say':11, ' community':12},
+            'diet':{"vegetarian":1, "mostly vegetarian":2, "strictly vegetarian":3, "vegan":4, "mostly vegan":5, "strictly vegan":6, "halal":7, "mostly halal":8, "strictly halal":9, "kosher":10, "mostly kosher":11, "strictly kosher":12, "anything":13, "mostly anything":14, "strictly anything":15, "other":16, "mostly other":17, "strictly other":18, " dating partner(s)":19},
+            'drinks':{"socially":1, "often":2, "not at all":3, "rarely":4, "very often":5, "desperately":6, " playmates":7},
+            'drugs':{"never":1, "sometimes":2, "often":3, " and maybe down the line":4},
+            'smokes':{"sometimes":1, "no":2, "trying to quit":3, "when drinking":4, "yes":5, " seems important to say":6},
+             }
+# %%
+df_okcupid=new_okcupid.replace(replace_ty)
+# %%
