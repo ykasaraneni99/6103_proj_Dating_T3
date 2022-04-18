@@ -32,8 +32,11 @@ new_data['drugs'].isnull().sum()
 new_dating_data = new_data.dropna()  
 
 #%%
-replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
-            'drinks':{'socially':15,"often":16,"not at all":17,"rarely":18, "very often":19},
+replace_ty={#'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
+            'drinks':{'socially':1,"often":2,"not at all":3,"rarely":4, "very often":5},
+            'diet':{'strictly anything':1,'mostly other':2, 'mostly anything':3,'mostly vegetarian':4,'strictly vegan':5, 'anything':6, 'vegetarian':7, 'mostly halal':8, 'strictly vegetarian':9, 'other':10, 'strictly other': 11, 'vegan':12, 'mostly vegan':13, 'mostly kosher':14, 'strictly halal':15, 'halal':16, 'strictly kosher':17, 'kosher': 18},
+            'never':{'never': 1, 'sometimes': 2, 'often': 3},
+            'smokes':{'sometimes':1, 'no':2, 'trying to quit':3, 'when drinking':4, 'yes':5}
            }
 
 df_dating=new_dating_data.replace(replace_ty)
@@ -78,10 +81,11 @@ plt.figure(figsize=(15, 5))
 sns.countplot(x='drinks', data=df_dating,
 hue='sex',
 order=df_dating['drinks'].value_counts().iloc[:10].index)
+
 # %%
 
 plt.figure(figsize=(15, 5))
-sns.countplot(x='drugs', data=new_dating_data,
+sns.countplot(x='drugs', data=df_dating,
 hue='sex',
-order=new_dating_data['drugs'].value_counts().iloc[:10].index)
+order=df_dating['drugs'].value_counts().iloc[:10].index)
 # %%
