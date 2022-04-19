@@ -81,6 +81,13 @@ plt.title("Body Type vs Status Scatter")
 plt.show()
 
 #%%
+sns.boxplot(x='body_type',y='status',data=df_okcupid)
+plt.xlabel("Body Type")
+plt.ylabel("Status")
+plt.title("Body Type vs Status Boxplot")
+plt.show()
+
+#%%
 # check missing values in variables
 df_okcupid.isnull().sum()
 
