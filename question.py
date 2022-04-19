@@ -123,6 +123,7 @@ modelTestLogit = glm(formula='body_type ~ C(diet) + C(drinks) + C(smokes) + C(dr
 modelTestLogitFit = modelTestLogit.fit()
 print( modelTestLogitFit.summary())
 
+
 # %%
 # Let's try logistic regression with sklearn 
 
@@ -165,8 +166,8 @@ print(logitr.predict(x_test))
 print("\nReady to continue.")
 
 #%%
-print(logitr.predict_proba(x_train[:8]))
-print(logitr.predict_proba(x_test[:8]))
+print(logitr.predict_proba(x_train[:5]))
+print(logitr.predict_proba(x_test[:5]))
 
 print("\nReady to continue.")
 
@@ -177,7 +178,7 @@ type(test)
 print("\nReady to continue.")
 
 # %%
-cut_off = 0.5
+cut_off = 0.7
 predictions = (logitr.predict_proba(x_test)[:,1]>cut_off).astype(int)
 print(predictions)
 
@@ -191,7 +192,7 @@ def predictcutoff(arr, cutoff):
   return arr.astype(int)
 
 test = logitr.predict_proba(x_test)
-p = predictcutoff(test, 0.2)
+p = predictcutoff(test, 0.9)
 print(p)
 
 # print("\nReady to continue.")
