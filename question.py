@@ -35,7 +35,7 @@ new_data.dtypes
 new_dating_data = new_data.dropna()  
 
 #%%
-replace_ty={#'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
+replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
             'drinks':{'socially':1,"often":2,"not at all":3,"rarely":4, "very often":5, 'desperately' :6},
             'diet':{'strictly anything':1,'mostly other':2, 'mostly anything':3,'mostly vegetarian':4,'strictly vegan':5, 'anything':6, 'vegetarian':7, 'mostly halal':8, 'strictly vegetarian':9, 'other':10, 'strictly other': 11, 'vegan':12, 'mostly vegan':13, 'mostly kosher':14, 'strictly halal':15, 'halal':16, 'strictly kosher':17, 'kosher': 18},
             'drugs':{'never': 1, 'sometimes': 2, 'often': 3},
@@ -131,7 +131,7 @@ xdata = df_dating[['diet','drinks','smokes','drugs']]
 ydata = df_dating['body_type']
 print(type(xdata))
 print(type(ydata))
-# These xdfadmit and ydfadmit are dataframes
+
 
 
 from sklearn.model_selection import train_test_split
@@ -177,6 +177,28 @@ type(test)
 print("\nReady to continue.")
 
 # %%
+cut_off = 0.5
+predictions = (logitr.predict_proba(x_test)[:,1]>cut_off).astype(int)
+print(predictions)
+
+print("\nReady to continue.")
+
+#%%
+def predictcutoff(arr, cutoff):
+  arrbool = arr[:,1]>cutoff
+  arr= arr[:,1]*arrbool/arr[:,1]
+  # arr= arr[:,1]*arrbool
+  return arr.astype(int)
+
+test = logitr.predict_proba(x_test)
+p = predictcutoff(test, 0.2)
+print(p)
+
+# print("\nReady to continue.")
+
+#%%
+
+predictcutoff(test, 0.5)
 
 # classification_report
 
