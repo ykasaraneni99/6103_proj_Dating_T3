@@ -128,7 +128,6 @@ clf_gini.fit(X_train, y_train)
 #%%
 # Predict the Test set results with criterion gini index
 y_pred_gini = clf_gini.predict(X_test)
-print("Accuracy:", metrics.accuracy_score(y_test, y_pred_gini))
 
 #%%
 # Check accuracy score with criterion gini index
