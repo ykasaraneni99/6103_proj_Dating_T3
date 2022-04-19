@@ -4,25 +4,32 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn import metrics
 #%%
 dating = pd.read_csv("/Users/yasaswikasaraneni/Documents/GW/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","status"], axis=1)
+okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","status","age","sex"], axis=1)
 
 # %%
 new_okcupid = okcupid.dropna() 
 
-#Preprocessing
+
 # %%
+#Preprocessing
 replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":3,"thin":4, 'fit':5, 'curvy':6, 'full figured':7, 'jacked':8, 'overweight':9, 'used up':10, 'rather not say':11, ' community':12},
             'diet':{"vegetarian":1, "mostly vegetarian":2, "strictly vegetarian":3, "vegan":4, "mostly vegan":5, "strictly vegan":6, "halal":7, "mostly halal":8, "strictly halal":9, "kosher":10, "mostly kosher":11, "strictly kosher":12, "anything":13, "mostly anything":14, "strictly anything":15, "other":16, "mostly other":17, "strictly other":18, " dating partner(s)":19},
             'drinks':{"socially":1, "often":2, "not at all":3, "rarely":4, "very often":5, "desperately":6, " playmates":7},
             'drugs':{"never":1, "sometimes":2, "often":3, " and maybe down the line":4},
             'smokes':{"sometimes":1, "no":2, "trying to quit":3, "when drinking":4, "yes":5, " seems important to say":6},
-            'status':{'single':1, 'available':2, 'seeing someone':3, 'married':4, 'unknown':5,'simple and potent people met in everyday life ... (which especially includes infants and children) athlete':6}
+            'status':{'single':1, 'available':2, 'seeing someone':3, 'married':4, 'unknown':5,'simple and potent people met in everyday life ... (which especially includes infants and children) athlete':6},
+            'sex':{'m':0, 'f':2, ' strength trainer/power lifter with brains and heart':3}
              }
 
 # %%
 df_okcupid=new_okcupid.replace(replace_ty)
+
+#%%
+# check missing values in variables
+df_okcupid.isnull().sum()
 
 #%%
 # Histogram Plot of Body Type
@@ -80,15 +87,16 @@ plt.ylabel("Status")
 plt.title("Body Type vs Status Scatter")
 plt.show()
 
-
-
 #%%
-# check missing values in variables
-df_okcupid.isnull().sum()
+plt.scatter(df_okcupid.diet, df_okcupid.sex, color = "green")
+plt.xlabel("Diet")
+plt.ylabel("Sex")
+plt.title("Diet vs Sex Scatter plot")
+plt.show()
 
 #%%
 # Declare feature vector and target variable
-X = df_okcupid.drop(['body_type','status'], axis=1)
+X = df_okcupid.drop(['body_type','status','sex','age'], axis=1)
 y = df_okcupid['body_type']
 
 #%% 
@@ -120,6 +128,7 @@ clf_gini.fit(X_train, y_train)
 #%%
 # Predict the Test set results with criterion gini index
 y_pred_gini = clf_gini.predict(X_test)
+print("Accuracy:", metrics.accuracy_score(y_test, y_pred_gini))
 
 #%%
 # Check accuracy score with criterion gini index
