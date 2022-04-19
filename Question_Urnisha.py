@@ -68,6 +68,6 @@ print( modelStatusLogitFit.summary() )
 # modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
 # print( modelStatusLogitFit.summary() )
 
-newdata = {"age":26 , "orientation":"Gay", "sex":"Female"}
+newdata = {"age":[26,30,52,69] , "orientation":["Gay","Straight", "Bisexual", "Straight"], "sex":["Female","Male", "Male","Female"]}
 print("Probability of Being Taken", modelStatusLogitFit.predict(newdata))
 # %%
