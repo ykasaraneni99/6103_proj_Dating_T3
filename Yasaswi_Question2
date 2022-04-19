@@ -74,9 +74,9 @@ plt.show()
 
 #%%
 # Scatter Plot between Body Type and Status
-plt.scatter(df_okcupid.status, df_okcupid.body_type, color = "green")
-plt.xlabel("Status")
-plt.ylabel("Body Type")
+plt.scatter(df_okcupid.body_type, df_okcupid.status, color = "green")
+plt.xlabel("Body Type")
+plt.ylabel("Status")
 plt.title("Body Type vs Status Scatter")
 plt.show()
 
