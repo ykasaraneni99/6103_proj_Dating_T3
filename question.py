@@ -124,7 +124,7 @@ modelTestLogitFit = modelTestLogit.fit()
 print( modelTestLogitFit.summary())
 
 # %%
-# Let's try logistic regression again with sklearn 
+# Let's try logistic regression with sklearn 
 
 # Prepare our X data (features, predictors, regressors) and y data (target, dependent variable)
 xdata = df_dating[['diet','drinks','smokes','drugs']]
