@@ -73,6 +73,14 @@ plt.title("Histogram of Status")
 plt.show()
 
 #%%
+# Scatter Plot between Body Type and Status
+plt.scatter(df_okcupid.status, df_okcupid.body_type, color = "green")
+plt.xlabel("Status")
+plt.ylabel("Body Type")
+plt.title("Body Type vs Status Scatter")
+plt.show()
+
+#%%
 # check missing values in variables
 df_okcupid.isnull().sum()
 
