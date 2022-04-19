@@ -48,7 +48,13 @@ plt.ylabel("Count")
 plt.title("Histogram of Drinks")
 plt.show()
 
-
+#%%
+# Histogram Plot of Drugs
+plt.hist(df_okcupid.drugs)
+plt.xlabel("Drugs")
+plt.ylabel("Count")
+plt.title("Histogram of Drugs")
+plt.show()
 
 #%%
 # check missing values in variables
