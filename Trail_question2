@@ -21,4 +21,14 @@ new_okcupid["body_type_cat"] = new_okcupid["body_type"].cat.codes
 # %%
 new_okcupid["drugs"] = new_okcupid["drugs"].astype('category')
 new_okcupid["drugs_cat"] = new_okcupid["drugs"].cat.codes
+
+#%%
+# Declare feature vector and target variable
+X = new_okcupid['drugs']
+y = new_okcupid['body_type']
+
+# %%
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, random_state = 42)
 # %%
