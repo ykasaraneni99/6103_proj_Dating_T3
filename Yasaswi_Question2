@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 #%%
 dating = pd.read_csv("/Users/yasaswikasaraneni/Documents/GW/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","status"], axis=1)
+okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","status","age","sex"], axis=1)
 
 # %%
 new_okcupid = okcupid.dropna() 
@@ -18,7 +18,8 @@ replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":
             'drinks':{"socially":1, "often":2, "not at all":3, "rarely":4, "very often":5, "desperately":6, " playmates":7},
             'drugs':{"never":1, "sometimes":2, "often":3, " and maybe down the line":4},
             'smokes':{"sometimes":1, "no":2, "trying to quit":3, "when drinking":4, "yes":5, " seems important to say":6},
-            'status':{'single':1, 'available':2, 'seeing someone':3, 'married':4, 'unknown':5,'simple and potent people met in everyday life ... (which especially includes infants and children) athlete':6}
+            'status':{'single':1, 'available':2, 'seeing someone':3, 'married':4, 'unknown':5,'simple and potent people met in everyday life ... (which especially includes infants and children) athlete':6},
+            'sex':{'m':0, 'f':2, ' strength trainer/power lifter with brains and heart':3}
              }
 
 # %%
@@ -84,6 +85,7 @@ plt.ylabel("Status")
 plt.title("Body Type vs Status Scatter")
 plt.show()
 
+#%%
 
 
 #%%
