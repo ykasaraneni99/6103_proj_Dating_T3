@@ -25,11 +25,19 @@ replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":
 df_okcupid=new_okcupid.replace(replace_ty)
 
 #%%
-# Plots
+# Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
 plt.ylabel("Count")
 plt.title("Histogram of Body Type")
+plt.show()
+
+#%%
+# Histogram Plot of Diet
+plt.hist(df_okcupid.diet)
+plt.xlabel("Diet")
+plt.ylabel("Count")
+plt.title("Histogram of Diet")
 plt.show()
 
 #%%
