@@ -25,6 +25,14 @@ replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":
 df_okcupid=new_okcupid.replace(replace_ty)
 
 #%%
+# Plots
+plt.hist(df_okcupid.body_type)
+plt.xlabel("Body Type")
+plt.ylabel("Count")
+plt.title("Histogram of Body Type")
+plt.show()
+
+#%%
 # check missing values in variables
 df_okcupid.isnull().sum()
 
