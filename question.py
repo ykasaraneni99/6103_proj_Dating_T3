@@ -136,7 +136,7 @@ print(type(ydata))
 
 
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 )
+x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 , test_size=0.75)
 
 print('x_train type',type(x_train))
 print('x_trainshape',x_train.shape)
