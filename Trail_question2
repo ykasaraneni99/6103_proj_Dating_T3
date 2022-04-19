@@ -21,14 +21,22 @@ new_okcupid["body_type_cat"] = new_okcupid["body_type"].cat.codes
 # %%
 new_okcupid["drugs"] = new_okcupid["drugs"].astype('category')
 new_okcupid["drugs_cat"] = new_okcupid["drugs"].cat.codes
-
-#%%
-# Declare feature vector and target variable
-X = new_okcupid['drugs']
-y = new_okcupid['body_type']
-
 # %%
+X = new_okcupid['drugs_cat']
+y = new_okcupid['body_type_cat']
+
+#%% 
+# split X and y into training and testing sets
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, random_state = 42)
+# %%
+X_train.shape, X_test.shape
+X_train.dtypes
+# %%
+from sklearn.tree import DecisionTreeClassifier
+
+clf_gini = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=0)
+
+clf_gini.fit(X_train, y_train)
 # %%
