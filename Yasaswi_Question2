@@ -57,6 +57,14 @@ plt.title("Histogram of Drugs")
 plt.show()
 
 #%%
+# Histogram Plot of Smokes
+plt.hist(df_okcupid.smokes)
+plt.xlabel("Smokes")
+plt.ylabel("Count")
+plt.title("Histogram of Smokes")
+plt.show()
+
+#%%
 # check missing values in variables
 df_okcupid.isnull().sum()
 
