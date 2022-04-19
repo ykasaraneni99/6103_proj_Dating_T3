@@ -29,6 +29,64 @@ df_okcupid=new_okcupid.replace(replace_ty)
 df_okcupid.isnull().sum()
 
 #%%
+# Histogram Plot of Body Type
+plt.hist(df_okcupid.body_type)
+plt.xlabel("Body Type")
+plt.ylabel("Count")
+plt.title("Histogram of Body Type")
+plt.show()
+
+#%%
+# Histogram Plot of Diet
+plt.hist(df_okcupid.diet)
+plt.xlabel("Diet")
+plt.ylabel("Count")
+plt.title("Histogram of Diet")
+plt.show()
+
+#%%
+# Histogram Plot of Drinks
+plt.hist(df_okcupid.drinks)
+plt.xlabel("Drinks")
+plt.ylabel("Count")
+plt.title("Histogram of Drinks")
+plt.show()
+
+#%%
+# Histogram Plot of Drugs
+plt.hist(df_okcupid.drugs)
+plt.xlabel("Drugs")
+plt.ylabel("Count")
+plt.title("Histogram of Drugs")
+plt.show()
+
+#%%
+# Histogram Plot of Smokes
+plt.hist(df_okcupid.smokes)
+plt.xlabel("Smokes")
+plt.ylabel("Count")
+plt.title("Histogram of Smokes")
+plt.show()
+
+#%%
+# Histogram Plot of Status
+plt.hist(df_okcupid.status)
+plt.xlabel("Status")
+plt.ylabel("Count")
+plt.title("Histogram of Status")
+plt.show()
+
+#%%
+# Scatter Plot between Body Type and Status
+plt.scatter(df_okcupid.body_type, df_okcupid.status, color = "green")
+plt.xlabel("Body Type")
+plt.ylabel("Status")
+plt.title("Body Type vs Status Scatter")
+plt.show()
+
+
+
+#%%
 # Declare feature vector and target variable
 X = df_okcupid.drop(['body_type','status'], axis=1)
 y = df_okcupid['body_type']
