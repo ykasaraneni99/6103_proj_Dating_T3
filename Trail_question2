@@ -10,5 +10,11 @@ okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","statu
 #%%
 obj_okcupid = okcupid.select_dtypes(include=['object']).copy()
 # %%
+obj_okcupid[obj_okcupid.isnull().any(axis=1)]
+# %%
+new_okcupid = obj_okcupid.dropna() 
+# %%
+new_okcupid.isnull().sum()
+# %%
 
 # %%
