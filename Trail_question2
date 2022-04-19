@@ -16,5 +16,7 @@ new_okcupid = obj_okcupid.dropna()
 # %%
 new_okcupid.isnull().sum()
 # %%
-
+new_okcupid["body_type"] = new_okcupid["body_type"].astype('category')
+# %%
+new_okcupid["body_type_cat"] = new_okcupid["body_type"].cat.codes
 # %%
