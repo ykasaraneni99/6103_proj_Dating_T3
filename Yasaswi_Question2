@@ -1,18 +1,128 @@
 #Q2. How does diet, drinking, drugs, and smoking impact one's body type?
 #%%
-import pandas as pd 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+#%%
 dating = pd.read_csv("/Users/yasaswikasaraneni/Documents/GW/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
-okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes"], axis=1)
+okcupid = dating.filter(["body_type", "diet", "drinks", "drugs", "smokes","status"], axis=1)
 
 # %%
-new_okcupid = okcupid.dropna()  
+new_okcupid = okcupid.dropna() 
+
+#Preprocessing
 # %%
 replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":3,"thin":4, 'fit':5, 'curvy':6, 'full figured':7, 'jacked':8, 'overweight':9, 'used up':10, 'rather not say':11, ' community':12},
             'diet':{"vegetarian":1, "mostly vegetarian":2, "strictly vegetarian":3, "vegan":4, "mostly vegan":5, "strictly vegan":6, "halal":7, "mostly halal":8, "strictly halal":9, "kosher":10, "mostly kosher":11, "strictly kosher":12, "anything":13, "mostly anything":14, "strictly anything":15, "other":16, "mostly other":17, "strictly other":18, " dating partner(s)":19},
             'drinks':{"socially":1, "often":2, "not at all":3, "rarely":4, "very often":5, "desperately":6, " playmates":7},
             'drugs':{"never":1, "sometimes":2, "often":3, " and maybe down the line":4},
             'smokes':{"sometimes":1, "no":2, "trying to quit":3, "when drinking":4, "yes":5, " seems important to say":6},
+            'status':{'single':1, 'available':2, 'seeing someone':3, 'married':4, 'unknown':5,'simple and potent people met in everyday life ... (which especially includes infants and children) athlete':6}
              }
+
 # %%
 df_okcupid=new_okcupid.replace(replace_ty)
+
+#%%
+# check missing values in variables
+df_okcupid.isnull().sum()
+
+#%%
+# Declare feature vector and target variable
+X = df_okcupid.drop(['body_type','status'], axis=1)
+y = df_okcupid['body_type']
+
+#%% 
+# split X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, random_state = 42)
+
+#%%
+# check the shape of X_train and X_test
+X_train.shape, X_test.shape
+
+#%%
+# check data types in X_train
+X_train.dtypes
+
+#%%
+## Decision Tree Classifier with criterion gini index
+# import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+#%%
+# instantiate the DecisionTreeClassifier model with criterion gini index
+clf_gini = DecisionTreeClassifier(criterion='gini', max_depth=3, random_state=0)
+
+# fit the model
+clf_gini.fit(X_train, y_train)
+
+#%%
+# Predict the Test set results with criterion gini index
+y_pred_gini = clf_gini.predict(X_test)
+
+#%%
+# Check accuracy score with criterion gini index
+from sklearn.metrics import accuracy_score
+
+print('Model accuracy score with criterion gini index: {0:0.4f}'. format(accuracy_score(y_test, y_pred_gini)))
+
+#%%
+# Compare the train-set and test-set accuracy
+y_pred_train_gini = clf_gini.predict(X_train)
+y_pred_train_gini
+print('Training-set accuracy score: {0:0.4f}'. format(accuracy_score(y_train, y_pred_train_gini)))
+
+#%%
+# Check for overfitting and underfitting
+# print the scores on training and test set
+print('Training set score: {:.4f}'.format(clf_gini.score(X_train, y_train)))
+print('Test set score: {:.4f}'.format(clf_gini.score(X_test, y_test)))
+
+#%%
+## Decision Tree Classifier with criterion entropy
+# instantiate the DecisionTreeClassifier model with criterion entropy
+clf_en = DecisionTreeClassifier(criterion='entropy', max_depth=3, random_state=0)
+
+# fit the model
+clf_en.fit(X_train, y_train)
+
+#%%
+#Predict the Test set results with criterion entropy
+y_pred_en = clf_en.predict(X_test)
+
+#%%
+#Check accuracy score with criterion entropy
+from sklearn.metrics import accuracy_score
+print('Model accuracy score with criterion entropy: {0:0.4f}'. format(accuracy_score(y_test, y_pred_en)))
+
+#%%
+#Compare the train-set and test-set accuracy
+y_pred_train_en = clf_en.predict(X_train)
+y_pred_train_en
+
+print('Training-set accuracy score: {0:0.4f}'. format(accuracy_score(y_train, y_pred_train_en)))
+
+#%%
+#Check for overfitting and underfitting
+# print the scores on training and test set
+print('Training set score: {:.4f}'.format(clf_en.score(X_train, y_train)))
+print('Test set score: {:.4f}'.format(clf_en.score(X_test, y_test)))
+
+#%%
+##Confusion matrix
+# Print the Confusion Matrix and slice it into four pieces
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred_en)
+print('Confusion matrix\n\n', cm)
+
+#%%
+# Classification Report
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred_en))
+
+
+
 # %%
