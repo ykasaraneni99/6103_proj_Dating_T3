@@ -206,4 +206,79 @@ predictcutoff(test, 0.5)
 from sklearn.metrics import classification_report
 y_true, y_pred = y_test, logitr.predict(x_test)
 print(classification_report(y_true, y_pred))
+
+# %%
+x1data = df_dating[['drugs']]
+y1data = df_dating['body_type']
+print(type(x1data))
+print(type(y1data))
+
+
+# %%
+from sklearn.model_selection import train_test_split
+x1_train, x1_test, y1_train, y1_test = train_test_split(x1data, y1data, random_state=1 , test_size=0.50)
+
+print('x_train type',type(x1_train))
+print('x_trainshape',x1_train.shape)
+print('x_test type',type(x1_test))
+print('x_test shape',x1_test.shape)
+print('y_train type',type(y1_train))
+print('y_train shape',y1_train.shape)
+print('y_test type',type(y1_test))
+print('y_test shape',y1_test.shape)
+
+print("\nReady to continue.")
+
+
+#%%
+from sklearn.linear_model import LogisticRegression
+
+logitr_d = LogisticRegression()  
+logitr_d.fit(x1_train, y1_train)
+print('Logit model accuracy (with the test set):', logitr_d.score(x1_test, y1_test))
+print('Logit model accuracy (with the train set):', logitr_d.score(x1_train, y1_train))
+
+print("\nReady to continue.")
+
+#%%
+print(logitr_d.predict(x1_test))
+
+print("\nReady to continue.")
+
+#%%
+print(logitr_d.predict_proba(x1_train[:5]))
+print(logitr_d.predict_proba(x1_test[:5]))
+
+print("\nReady to continue.")
+
+#%%
+test = logitr_d.predict_proba(x1_test)
+type(test)
+
+print("\nReady to continue.")
+
+# %%
+cut_off = 0.7
+predictions = (logitr_d.predict_proba(x1_test)[:,1]>cut_off).astype(int)
+print(predictions)
+
+print("\nReady to continue.")
+
+#%%
+def predictcutoff(arr, cutoff):
+  arrbool = arr[:,1]>cutoff
+  arr= arr[:,1]*arrbool/arr[:,1]
+  # arr= arr[:,1]*arrbool
+  return arr.astype(int)
+
+test1 = logitr_d.predict_proba(x1_test)
+p = predictcutoff(test1, 0.9)
+print(p)
+
+# print("\nReady to continue.")
+
+#%%
+
+predictcutoff(test1, 0.5)
+
 # %%
