@@ -62,7 +62,8 @@ from statsmodels.formula.api import glm
 # modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
 # print( modelStatusLogitFit.summary() )
 
-modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)', data=okcupid, family=sm.families.Binomial()).fit()
+modelStatusLogit = glm(formula='single ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)', data=okcupid, family=sm.families.Binomial())
+modelStatusLogitFit = modelStatusLogit.fit()
 print( modelStatusLogitFit.summary() )
 
 # modelStatusLogitFit = glm(formula='single ~ age+C(orientation)+C(sex)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
@@ -70,4 +71,26 @@ print( modelStatusLogitFit.summary() )
 
 newdata = {"age":[26,30,52,69] , "orientation":["Gay","Straight", "Bisexual", "Straight"], "sex":["Female","Male", "Male","Female"]}
 print("Probability of Being Taken", modelStatusLogitFit.predict(newdata))
+#%%
+okcupidpredicitons = pd.DataFrame( columns=['total_status'], data=modelStatusLogitFit.predict(okcupid))
+cut_off = [0.3,0.5,0.7]
+for x in cut_off:
+    okcupidpredicitons['statusALLlogit'] = np.where(okcupidpredicitons["total_status"] > x, 1, 0)
+    okcupid_cmatrix = pd.crosstab(okcupid.single, okcupidpredicitons.statusALLlogit,
+    rownames=['Actual'], colnames=['Predicted'],
+    margins = True)
+    
+    # print(f"Total Accuracy of the Model with {x} Cutoff: {(okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,0])/ okcupid_cmatrix.iloc[2,2]} ")
+    # print(f"Precision of the Model with {x} Cutoff: { okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[1,0] ) } ")
+    # print(f"Recall Rate of the Model with {x} Cutoff: { (okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,1]))} ")
 # %%
+# cut_off = 0.3
+# # Compute class predictions
+# modelpredicitons['admit_GreAllLogit'] = modelAdmitAllLogitFit.predict(dfadmit)
+# modelpredicitons['classLogitAll'] = np.where(modelpredicitons['admit_GreAllLogit'] > cut_off, 1, 0)
+# print(modelpredicitons.classLogitAll.head())
+# #
+# # Make a cross table
+# print(pd.crosstab(dfadmit.admit, modelpredicitons.classLogitAll,
+# rownames=['Actual'], colnames=['Predicted'],
+# margins = True))
