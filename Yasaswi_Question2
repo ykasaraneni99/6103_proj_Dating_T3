@@ -28,6 +28,11 @@ replace_ty = {'body_type':{"a little extra":0,"average":1,"athletic":2,"skinny":
 df_okcupid=new_okcupid.replace(replace_ty)
 
 #%%
+# Correlation Matrix
+cormat = df_okcupid.corr()
+round(cormat,2)
+
+#%%
 # check missing values in variables
 df_okcupid.isnull().sum()
 
@@ -46,6 +51,12 @@ plt.xlabel("Diet")
 plt.ylabel("Count")
 plt.title("Histogram of Diet")
 plt.show()
+
+#%%
+plt.hist(df_okcupid.diet, 35, range=[0, 19], facecolor='red', align='mid')
+plt.xlabel("Diet")
+plt.ylabel("Count")
+plt.title("Histogram of Diet")
 
 #%%
 # Histogram Plot of Drinks
