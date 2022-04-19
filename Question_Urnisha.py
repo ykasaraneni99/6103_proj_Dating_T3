@@ -79,10 +79,9 @@ for x in cut_off:
     okcupid_cmatrix = pd.crosstab(okcupid.single, okcupidpredicitons.statusALLlogit,
     rownames=['Actual'], colnames=['Predicted'],
     margins = True)
-    
-    # print(f"Total Accuracy of the Model with {x} Cutoff: {(okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,0])/ okcupid_cmatrix.iloc[2,2]} ")
-    # print(f"Precision of the Model with {x} Cutoff: { okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[1,0] ) } ")
-    # print(f"Recall Rate of the Model with {x} Cutoff: { (okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,1]))} ")
+    print(f"Total Accuracy of the Model with {x} Cutoff: {(okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,0])/ okcupid_cmatrix.iloc[2,2]} ")
+    print(f"Precision of the Model with {x} Cutoff: { okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[1,0] ) } ")
+    print(f"Recall Rate of the Model with {x} Cutoff: { (okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,1]))} ")
 # %%
 # cut_off = 0.3
 # # Compute class predictions
