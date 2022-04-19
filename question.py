@@ -11,7 +11,7 @@ import pandas as pd
 dating = pd.read_csv("okcupid_profiles.csv")
 
 
-# dropping all the unequired columns.
+# dropping all the unrequired columns.
 new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
@@ -30,14 +30,6 @@ new_data.dtypes
 
 #%%
 
-#
-dating.corr().style.background_gradient()
-
-# checking if there are any NaN values for one column
-new_data['drugs'].isnull().values.any()
-
-# count of NaN values for that particular column
-new_data['drugs'].isnull().sum()
 
 # Droping all the column which has NAN values
 new_dating_data = new_data.dropna()  
@@ -85,19 +77,6 @@ import seaborn as sns
 from matplotlib.pyplot import figure
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(15, 5))
-sns.set_theme(style="whitegrid")
-sns.boxenplot(x="body_type", y="age",data=df_dating)
-
-#df_dating.plot('diet','body_type', kind='scatter', marker='o') 
-#plt.ylabel('body type')
-#plt.xlabel('diet')
-#plt.show()
-
-plt.figure(figsize=(10, 5))
-sns.countplot(x='body_type', data=df_dating,
-hue='drinks',
-order=df_dating['body_type'].value_counts().iloc[:10].index)
 
 #%%
 plt.figure(figsize=(10, 7))
@@ -107,9 +86,9 @@ order=df_dating['body_type'].value_counts().iloc[:10].index)
 
 
 plt.figure(figsize=(10, 5))
-sns.countplot(x='diet', data=df_dating,
+sns.countplot(x='body_type', data=df_dating,
 hue='sex',
-order=df_dating['diet'].value_counts().iloc[:10].index)
+order=df_dating['body_type'].value_counts().iloc[:10].index)
 #%%
 
 plt.figure(figsize=(10, 6))
@@ -117,22 +96,16 @@ sns.countplot(x='body_type', data=df_dating,
 hue='drinks',
 order=df_dating['body_type'].value_counts().iloc[:10].index)
 
-plt.figure(figsize=(10, 5))
-sns.countplot(x='drinks', data=df_dating,
-hue='sex', palette='flare',
-order=df_dating['drinks'].value_counts().iloc[:10].index)
+
 
 # %%
 
 plt.figure(figsize=(10, 5))
 sns.countplot(x='body_type', data=df_dating,
-hue='drugs',
+hue='drugs', palette='Oranges',
 order=df_dating['body_type'].value_counts().iloc[:10].index)
 
-plt.figure(figsize=(10, 5))
-sns.countplot(y='drugs', data=df_dating,
-hue='sex', palette='Reds',
-order=df_dating['drugs'].value_counts().iloc[:10].index)
+
 
 #%%
 plt.figure(figsize=(10, 6))
@@ -140,10 +113,16 @@ sns.countplot(x='body_type', data=df_dating,
 hue='smokes',
 order=df_dating['body_type'].value_counts().iloc[:10].index)
 
-plt.figure(figsize=(10, 5))
-sns.countplot(y='smokes', data=df_dating,
-hue='sex', palette='Oranges',
-order=df_dating['smokes'].value_counts().iloc[:10].index)
+
+
+#%%
+from statsmodels.formula.api import glm
+import statsmodels.api as sm
+
+modelTestLogit = glm(formula='body_type ~ C(diet) + C(drinks) + C(smokes) + C(drugs)', data=df_dating)
+modelTestLogitFit = modelTestLogit.fit()
+print( modelTestLogitFit.summary())
+
 # %%
 # Let's try logistic regression again with sklearn 
 
@@ -169,10 +148,11 @@ print('y_test shape',y_test.shape)
 
 print("\nReady to continue.")
 
-# %%
+
+#%%
 from sklearn.linear_model import LogisticRegression
 
-logitr = LogisticRegression()  # instantiate
+logitr = LogisticRegression()  
 logitr.fit(x_train, y_train)
 print('Logit model accuracy (with the test set):', logitr.score(x_test, y_test))
 print('Logit model accuracy (with the train set):', logitr.score(x_train, y_train))
