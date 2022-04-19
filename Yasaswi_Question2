@@ -141,19 +141,19 @@ clf_gini.fit(X_train, y_train)
 y_pred_gini = clf_gini.predict(X_test)
 
 #%%
-# Check accuracy score with criterion gini index
+# Checking accuracy score with criterion gini index
 from sklearn.metrics import accuracy_score
 
 print('Model accuracy score with criterion gini index: {0:0.4f}'. format(accuracy_score(y_test, y_pred_gini)))
 
 #%%
-# Compare the train-set and test-set accuracy
+# Comparing the train-set and test-set accuracy
 y_pred_train_gini = clf_gini.predict(X_train)
 y_pred_train_gini
 print('Training-set accuracy score: {0:0.4f}'. format(accuracy_score(y_train, y_pred_train_gini)))
 
 #%%
-# Check for overfitting and underfitting
+# Checking for overfitting and underfitting
 # print the scores on training and test set
 print('Training set score: {:.4f}'.format(clf_gini.score(X_train, y_train)))
 print('Test set score: {:.4f}'.format(clf_gini.score(X_test, y_test)))
@@ -198,7 +198,7 @@ print('Confusion matrix\n\n', cm)
 #%%
 # Classification Report
 from sklearn.metrics import classification_report
-print(classification_report(y_test, y_pred_en))
+print(classification_report(y_test, y_pred_gini))
 
 
 
