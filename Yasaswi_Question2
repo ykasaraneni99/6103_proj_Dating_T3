@@ -53,6 +53,18 @@ sns.countplot(data=new_okcupid, y="drinks");
 #The majority of the users drink "socially", then "rarely" and "often".
 
 #%%
+sns.countplot(data=new_okcupid, y="drugs");
+#The vast majority of users "never" use drugs.
+
+#%%
+sns.countplot(data=new_okcupid, y="smokes");
+#Similarly for drugs the majority of users chose "no" for smoking.
+
+#%%
+sns.countplot(data=new_okcupid, y="status");
+#The relationship status for a dating website is fairly predictable. One would assume that most people are single and available which is reflected in the data.
+
+#%%
 # Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
