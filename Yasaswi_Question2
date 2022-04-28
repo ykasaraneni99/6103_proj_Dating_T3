@@ -49,6 +49,10 @@ sns.countplot(data=new_okcupid, y="diet");
 #Here is a chart of the dietary information for users. Most user eat "mostly anything", followed by "anything", and "strictly anything", being open-minded seems to be a popular signal to potential partners.
 
 #%%
+sns.countplot(data=new_okcupid, y="drinks");
+#The majority of the users drink "socially", then "rarely" and "often".
+
+#%%
 # Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
