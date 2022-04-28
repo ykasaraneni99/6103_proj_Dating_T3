@@ -232,3 +232,25 @@ print(classification_report(y_test, y_pred_gini))
 
 
 # %%
+cols = ['body_type', 'diet', 'drinks', 'drugs', 'smokes']
+df = okcupid[cols].dropna()
+# %%
+for col in cols[:-1]:
+    df = pd.get_dummies(df, columns=[col], prefix = [col])
+# %%
+df.head()
+# %%
+col_length = len(df.columns)
+# %%
+X = df.iloc[:, 1:col_length]
+Y = df.iloc[:, 0:1]
+# %%
+from sklearn.model_selection import train_test_split 
+X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.25, random_state = 0)
+# %%
+Y_train = Y_train.to_numpy().ravel()
+Y_val = Y_val.to_numpy().ravel()
+Y_train
+# %%
+Y_val
+# %%
