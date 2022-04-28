@@ -231,6 +231,9 @@ print(classification_report(y_test, y_pred_gini))
 
 
 
+
+#%%[markdown]
+#Different method - not correct (just tried)
 # %%
 cols = ['body_type', 'diet', 'drinks', 'drugs', 'smokes']
 df = okcupid[cols].dropna()
@@ -253,4 +256,18 @@ Y_val = Y_val.to_numpy().ravel()
 Y_train
 # %%
 Y_val
+# %%
+from sklearn.tree import DecisionTreeClassifier
+
+cart_model = DecisionTreeClassifier().fit(X_train, Y_train) 
+cart_predictions = cart_model.predict(X_train) 
+# %%
+from sklearn.metrics import classification_report
+print(classification_report(Y_train, cart_predictions))
+# %%
+from sklearn.metrics import confusion_matrix 
+cart_cm = confusion_matrix(Y_train, cart_predictions)
+cart_labels = cart_model.classes_
+cart_cm
+
 # %%
