@@ -3,11 +3,13 @@
 import pandas as pd 
 import numpy as np
 import seaborn as sns
+import os 
 dating = pd.read_csv("/Users/urnishabhuiyan/Documents/6103_proj_Dating_T3/OkCupid_Data/okcupid_profiles.csv")
 okcupid1 = dating.filter(["age", "status", "sex", "orientation"], axis=1)
 okcupid = okcupid1.dropna(how="all")
-# %%
-# preprocessing the data 
+print("Ready to go")
+# %% 
+#preprocessing the data 
 # def new_orientation(row):
 #     orientation = row["orientation"]
 #     if orientation == "straight": return "Straight"
@@ -90,12 +92,13 @@ print(okcupid.age.value_counts())
 
 okcupid_clean = okcupid.dropna(how="all")
 # %%
-#Attempting different data models to predict outcome 
+#Attempting different linear regression interactions to predict outcome 
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
 
 modelStatusLogitFit = glm(formula='status ~ age+C(orientation)+C(sex)', data=okcupid_clean, family=sm.families.Binomial()).fit()
 print( modelStatusLogitFit.summary() )
+#Best to use each x value seperately as the interactions gave varying insignificant p-values. 
 
 # modelStatusLogitFit = glm(formula='taken ~ age+C(orientation)+C(sex)+C(sex):C(orientation)+age:C(sex)+age:C(orientation)', data=okcupid, family=sm.families.Binomial()).fit()
 # print( modelStatusLogitFit.summary() )
@@ -109,18 +112,9 @@ print( modelStatusLogitFit.summary() )
 
 newdata = {"age":[26] , "orientation":[0], "sex":[1]}
 print("Probability of Being Taken", modelStatusLogitFit.predict(newdata))
-#%%
-okcupidpredicitons = pd.DataFrame( columns=['total_status'], data=modelStatusLogitFit.predict(okcupid_clean))
-cut_off = [0.3,0.5,0.7]
-for x in cut_off:
-    okcupidpredicitons['statusALLlogit'] = np.where(okcupidpredicitons["total_status"] > x, 1, 0)
-    okcupid_cmatrix = pd.crosstab(okcupid.status, okcupidpredicitons.statusALLlogit,
-    rownames=['Actual'], colnames=['Predicted'],
-    margins = True)
-#     print(f"Total Accuracy of the Model with {x} Cutoff: {(okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,0])/ okcupid_cmatrix.iloc[2,2]} ")
-#     print(f"Precision of the Model with {x} Cutoff: { okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[1,0] ) } ")
-#     print(f"Recall Rate of the Model with {x} Cutoff: { (okcupid_cmatrix.iloc[1,1] / (okcupid_cmatrix.iloc[1,1] + okcupid_cmatrix.iloc[0,1]))} ")
+
 # %%
+#Determining linear regression model accuracy and precision 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
@@ -144,6 +138,9 @@ precision = metrics.precision_score(y_test1, predictions)
 accuracy = metrics.accuracy_score(y_test1, predictions)
 print("precision metrics:", precision)
 print("accuracy score:", accuracy)
+#Train and test accuracy was quite good; however, the precision and recall were not good. 
+
+#%%
 # %%
 def new_status(row):
     status = row["status"]
