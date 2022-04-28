@@ -41,6 +41,10 @@ sns.countplot(data=new_okcupid, y="body_type");
 #it seems that most users will describe themselves as average, fit, or athletic
 
 #%%
+sns.countplot(data=new_okcupid, y="body_type", hue = "sex");
+#This chart shows the break down of body type by gender and it seems that some of the body type descriptions are highly gendered. For example "curvy" and "full figured" are highly female descriptions, while males use "a little extra", and "overweight" more often. 
+
+#%%
 # Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
