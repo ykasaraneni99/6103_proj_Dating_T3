@@ -120,6 +120,8 @@ from sklearn.linear_model import LogisticRegression
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn import metrics
+from sklearn.metrics import confusion_matrix 
+from sklearn.metrics import classification_report
 
 yOkcupid = okcupid_clean[['status']]
 xOkcupid = okcupid_clean[['sex', 'age', 'orientation']]
@@ -134,13 +136,34 @@ predictions = data_logit1.predict(x_test1)
 cm = metrics.confusion_matrix(y_test1, predictions)
 print(cm)
 
-precision = metrics.precision_score(y_test1, predictions)
-accuracy = metrics.accuracy_score(y_test1, predictions)
-print("precision metrics:", precision)
-print("accuracy score:", accuracy)
+print(confusion_matrix(y_test1, data_logit1.predict(x_test1)))
+print(classification_report(y_test1, data_logit1.predict(x_test1)))
 #Train and test accuracy was quite good; however, the precision and recall were not good. 
-
 #%%
+#Attempting an sklearn LinearSVC model for same data 
+from sklearn.svm import LinearSVC
+linearsvc = LinearSVC()
+linearsvc.fit(x_train1,y_train1)
+print(f'LinearSVC train score: {linearsvc.score(x_train1,y_train1)}')
+print(f'LinearSVC test score:  {linearsvc.score(x_test1,y_test1)}')
+print(confusion_matrix(y_test1, linearsvc.predict(x_test1)))
+print(classification_report(y_test1, linearsvc.predict(x_test1)))
+#The linearSVC model appears to have the same accuracy, precision, and recall results. 
+#%%
+#Determining the 5-number summary of data 
+from numpy import percentile
+from numpy.random import rand
+predictedvalues = okcupid.status
+predictedvalues = rand(1000)
+data_min, data_max = predictedvalues.min(), predictedvalues.max()
+quartiles = percentile(predictedvalues, [25,50,75])
+print('Min: %.3f' % data_min)
+print('Q1: %.3f' % quartiles[0])
+print('Median: %.3f' % quartiles[1])
+print('Q3: %.3f' % quartiles[2])
+print('Max: %.3f' % data_max)
+#%%
+
 # %%
 def new_status(row):
     status = row["status"]
