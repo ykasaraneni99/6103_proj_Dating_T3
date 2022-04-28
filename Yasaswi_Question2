@@ -45,6 +45,10 @@ sns.countplot(data=new_okcupid, y="body_type", hue = "sex");
 #This chart shows the break down of body type by gender and it seems that some of the body type descriptions are highly gendered. For example "curvy" and "full figured" are highly female descriptions, while males use "a little extra", and "overweight" more often. 
 
 #%%
+sns.countplot(data=new_okcupid, y="diet");
+#Here is a chart of the dietary information for users. Most user eat "mostly anything", followed by "anything", and "strictly anything", being open-minded seems to be a popular signal to potential partners.
+
+#%%
 # Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
