@@ -37,11 +37,8 @@ round(cormat,2)
 df_okcupid.isnull().sum()
 
 #%%
-sns.set()
-sns.distplot(df_okcupid['body_type'],norm_hist = "True",hist_kws = {'color':'#8e00ce',
-                       'linewidth':5, 'linestyle':'--', 'alpha':0.3},
-            kde_kws = {'color':'#DC143C', 
-                       'linewidth':2, 'linestyle':'--', 'alpha':1});
+sns.countplot(data=new_okcupid, y="body_type");
+#it seems that most users will describe themselves as average, fit, or athletic
 
 #%%
 # Histogram Plot of Body Type
