@@ -37,6 +37,13 @@ round(cormat,2)
 df_okcupid.isnull().sum()
 
 #%%
+sns.set()
+sns.distplot(df_okcupid['body_type'],norm_hist = "True",hist_kws = {'color':'#8e00ce',
+                       'linewidth':5, 'linestyle':'--', 'alpha':0.3},
+            kde_kws = {'color':'#DC143C', 
+                       'linewidth':2, 'linestyle':'--', 'alpha':1});
+
+#%%
 # Histogram Plot of Body Type
 plt.hist(df_okcupid.body_type)
 plt.xlabel("Body Type")
