@@ -13,7 +13,7 @@ from regex import B
 dating = pd.read_csv("okcupid_profiles.csv")
 
 #%%
-# dropping all the unrequired columns.
+# dropping all the unrequired columns which are not related to our problem statement.
 new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
@@ -22,11 +22,6 @@ print(new_data.head())
 
 #checking if there are any misssing values and printing the sum
 new_data.isna().sum()
-#%%
-
-# making new data frame with dropped NA values
-new_data_a = new_data.dropna(thresh = 13, how = 'any')
-new_data_a.isna().sum()
 
 # viewing some basic statistical details like percentile, mean, std etc.
 new_data.describe()
@@ -36,12 +31,11 @@ new_data.dtypes
  
 
 #%%
-
-
 # Droping all the column which has NAN values
 new_dating_data = new_data.dropna()  
 
 #%%
+# replacing categorical values to numerical values for better modeling as there are multiple types in each variable.
 replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
             'drinks':{'socially':1,"often":2,"not at all":3,"rarely":4, "very often":5, 'desperately' :6},
             'diet':{'strictly anything':1,'mostly other':2, 'mostly anything':3,'mostly vegetarian':4,'strictly vegan':5, 'anything':6, 'vegetarian':7, 'mostly halal':8, 'strictly vegetarian':9, 'other':10, 'strictly other': 11, 'vegan':12, 'mostly vegan':13, 'mostly kosher':14, 'strictly halal':15, 'halal':16, 'strictly kosher':17, 'kosher': 18},
@@ -51,32 +45,12 @@ replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,
 
 df_dating=new_dating_data.replace(replace_ty)
 #%%
-## body type for people who are in diet
+## body type for people who are in drugs
 
-data =(new_dating_data.groupby("body_type")[["diet"]].count().sort_values(by="diet", ascending=False))
-data["% of participants"]=(data["diet"]/data["diet"].sum())*100
+data =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="drugs", ascending=False))
+data["% of participants"]=(data["drugs"]/data["drugs"].sum())*100
 data
 
-
-#%%
-## body type for people who drink
-
-data_d =(new_dating_data.groupby("body_type")[["drinks"]].count().sort_values(by="body_type", ascending=False))
-data_d["% of participants"]=(data_d["drinks"]/data_d["drinks"].sum())*100
-data_d
-
-
-#%%
-## body type for people who take drugs
-
-data_drug =(new_dating_data.groupby("body_type")[["drugs"]].count().sort_values(by="body_type", ascending=True))
-data_drug["% of participants"]=(data_drug["drugs"]/data_drug["drugs"].sum())*100
-data_drug
-
-#%%
-data_smoke =(new_dating_data.groupby("body_type")[["smokes"]].count().sort_values(by="body_type", ascending=False))
-data_smoke["% of participants"]=(data_smoke["smokes"]/data_smoke["smokes"].sum())*100
-data_smoke
 
 #%%
 import matplotlib as plt
@@ -86,12 +60,15 @@ import matplotlib.pyplot as plt
 
 
 #%%
+# doing preliminary analysis of data through graphs.
+
 plt.figure(figsize=(10, 7))
 sns.countplot(x='body_type', data=df_dating,
 hue='diet', 
 order=df_dating['body_type'].value_counts().iloc[:10].index).set(title = 'body type count per diet',xlabel='body type', ylabel = 'count')
 plt.legend(loc='right', labels=['strictly anything','mostly other', 'mostly anything','mostly vegetarian','strictly vegan', 'anything', 'vegetarian', 'mostly halal', 'strictly vegetarian', 'other', 'strictly other', 'vegan', 'mostly vegan', 'mostly kosher', 'strictly halal', 'halal', 'strictly kosher', 'kosher'])
 
+# 
 plt.figure(figsize=(10, 5))
 sns.countplot(x='body_type', data=df_dating,
 hue='sex',
@@ -132,10 +109,15 @@ modelTestLogitFit = modelTestLogit.fit()
 print( modelTestLogitFit.summary())
 
 
+# the p-values are high for all independent varaibles with respect to dependent varaiable which shows that there is no relation between them.
+# but for drugs the p-value is low and it appears that drug can impact with body type.
+
+
 # %%
 # Let's try logistic regression with sklearn 
 
 # Prepare our X data (features, predictors, regressors) and y data (target, dependent variable)
+# testing the above model
 xdata = df_dating[['diet','drinks','smokes','drugs']]
 ydata = df_dating['body_type']
 print(type(xdata))
@@ -173,9 +155,8 @@ print('coef_:', full_split1.coef_)
 
 
 #%%
-from sklearn.linear_model import LogisticRegression
 
-
+# checking the accuracy for the model
 
 logitr = LogisticRegression()  
 logitr.fit(x_train, y_train)
@@ -188,6 +169,7 @@ print('Logit model accuracy (with the train set):', logitr.score(x_train1, y_tra
 
 print("\nReady to continue.")
 
+# the accuracy for test and train datasets are similar despite low accuracy of the model.
 
 #%%
 print(logitr.predict_proba(x_train[:2]))
@@ -210,6 +192,7 @@ print(classification_report(y_true, y_pred))
 
 
 # %%
+
 x1data = df_dating[['drugs']]
 y1data = df_dating['body_type']
 print(type(x1data))
@@ -258,16 +241,12 @@ print('Logit model accuracy (with the train set):', logitr_d.score(x2_train1, y2
 print(confusion_matrix(y1_test, logitr_d.predict(x1_test)))
 print(classification_report(y1_test, logitr_d.predict(x1_test)))
 
-#%%
-print(logitr_d.predict(x1_test))
-print(logitr_d.predict(x2_test1))
+# even though the p-values for body type and drugs is significant the accuracy of the model is very low.
 
-
-print("\nReady to continue.")
 
 #%%
-print(logitr_d.predict_proba(x1_train[:5]))
-print(logitr_d.predict_proba(x1_test[:5]))
+print(logitr_d.predict_proba(x1_train[:2]))
+print(logitr_d.predict_proba(x1_test[:2]))
 
 print("\nReady to continue.")
 
@@ -283,3 +262,6 @@ print(confusion_matrix(y1_test, y1_train))
 print(classification_report(y1_test, y1_train))
 
 # %%
+
+# we can conclude that we cannot relate body type with smoke, drug, diet, drink accurately 
+# this arises from the facts that the data provided to an dating website maynot be 100% true and there are lots of missing values in the data.
