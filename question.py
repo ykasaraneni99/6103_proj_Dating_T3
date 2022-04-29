@@ -5,26 +5,38 @@
 #%%
 # NumPy
 
+<<<<<<< Updated upstream
+import re
+=======
+
+>>>>>>> Stashed changes
 import numpy as np
 import pandas as pd
+from regex import B
 
+# loading the data set
 dating = pd.read_csv("okcupid_profiles.csv")
 
-
+#%%
 # dropping all the unrequired columns.
 new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
 
 #%%
+
+#checking if there are any misssing values and printing the sum
 new_data.isna().sum()
 #%%
+
+# making new data frame with dropped NA values
 new_data_a = new_data.dropna(thresh = 13, how = 'any')
 new_data_a.isna().sum()
 
-
+# viewing some basic statistical details like percentile, mean, std etc.
 new_data.describe()
 
+# Checking all varaiables datatypes
 new_data.dtypes
  
 
@@ -35,7 +47,7 @@ new_data.dtypes
 new_dating_data = new_data.dropna()  
 
 #%%
-replace_ty={#'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
+replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
             'drinks':{'socially':1,"often":2,"not at all":3,"rarely":4, "very often":5, 'desperately' :6},
             'diet':{'strictly anything':1,'mostly other':2, 'mostly anything':3,'mostly vegetarian':4,'strictly vegan':5, 'anything':6, 'vegetarian':7, 'mostly halal':8, 'strictly vegetarian':9, 'other':10, 'strictly other': 11, 'vegan':12, 'mostly vegan':13, 'mostly kosher':14, 'strictly halal':15, 'halal':16, 'strictly kosher':17, 'kosher': 18},
             'drugs':{'never': 1, 'sometimes': 2, 'often': 3},
@@ -135,10 +147,35 @@ print(type(xdata))
 print(type(ydata))
 
 
-
+# model evaluation using train and test sets 
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 , test_size=0.75)
+from sklearn import linear_model
+from sklearn.linear_model import LogisticRegression
 
+x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 , test_size=0.75)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x_train, y_train)
+y_pred1 = full_split1.predict(x_test)
+full_split1.score(x_test, y_test)
+
+print('score (train):', full_split1.score(x_train, y_train)) # 0.006089919270939048
+print('score (test):', full_split1.score(x_test, y_test)) # 0.0017036426721409592
+print('intercept:', full_split1.intercept_) # 3.6214355401814764
+print('coef_:', full_split1.coef_)
+
+#%%
+x_train1, x_test1, y_train1, y_test1 = train_test_split(xdata, ydata, random_state=1234 , test_size=0.2)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x_train1, y_train1)
+y_pred1 = full_split1.predict(x_test1)
+full_split1.score(x_test1, y_test1)
+
+print('score (train):', full_split1.score(x_train1, y_train1)) # 0.00354847998664809
+print('score (test):', full_split1.score(x_test1, y_test1)) # 0.005653206830862567
+print('intercept:', full_split1.intercept_) # 3.6890535363964876
+print('coef_:', full_split1.coef_)
+
+#%%
 print('x_train type',type(x_train))
 print('x_trainshape',x_train.shape)
 print('x_test type',type(x_test))
@@ -189,7 +226,6 @@ print("\nReady to continue.")
 def predictcutoff(arr, cutoff):
   arrbool = arr[:,1]>cutoff
   arr= arr[:,1]*arrbool/arr[:,1]
-  # arr= arr[:,1]*arrbool
   return arr.astype(int)
 
 test = logitr.predict_proba(x_test)
@@ -236,7 +272,7 @@ from sklearn.linear_model import LogisticRegression
 
 logitr_d = LogisticRegression()  
 logitr_d.fit(x1_train, y1_train)
-print('Logit model accuracy (with the test set):', logitr_d.score(x1_test, y1_test))
+print(f'Logit model accuracy (with the test set): {logitr_d.score(x1_test, y1_test)}')
 print('Logit model accuracy (with the train set):', logitr_d.score(x1_train, y1_train))
 
 print("\nReady to continue.")
@@ -259,6 +295,7 @@ type(test)
 print("\nReady to continue.")
 
 # %%
+
 cut_off = 0.7
 predictions = (logitr_d.predict_proba(x1_test)[:,1]>cut_off).astype(int)
 print(predictions)
@@ -269,7 +306,6 @@ print("\nReady to continue.")
 def predictcutoff(arr, cutoff):
   arrbool = arr[:,1]>cutoff
   arr= arr[:,1]*arrbool/arr[:,1]
-  # arr= arr[:,1]*arrbool
   return arr.astype(int)
 
 test1 = logitr_d.predict_proba(x1_test)
@@ -281,5 +317,8 @@ print(p)
 #%%
 
 predictcutoff(test1, 0.5)
+
+# %%
+
 
 # %%
