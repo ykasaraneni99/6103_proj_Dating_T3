@@ -163,8 +163,23 @@ print('Median: %.3f' % quartiles[1])
 print('Q3: %.3f' % quartiles[2])
 print('Max: %.3f' % data_max)
 #%%
+#Changing threshold from 0.5 to 0.05 
+y_pred = (data_logit1.predict_proba(x_test1)[:,1] >= 0.05).astype(bool)
+print(confusion_matrix(y_test1, y_pred))
+print(classification_report(y_test1, y_pred))
 
+#Changing threshold from 0.5 to 0.10
+y_pred = (data_logit1.predict_proba(x_test1)[:,1] >= 0.10).astype(bool)
+print(confusion_matrix(y_test1, y_pred))
+print(classification_report(y_test1, y_pred))
+
+#Changing threshold from 0.5 to 0.15
+y_pred = (data_logit1.predict_proba(x_test1)[:,1] >= 0.15).astype(bool)
+print(confusion_matrix(y_test1, y_pred))
+print(classification_report(y_test1, y_pred))
+#Appears the best threshold to use for this dataset is 0.10. This gave a precision of 0.12 and recall of 0.03. It's not very good still; however, it is a bit better from the original numbers. This brings down the accuracy by 1 percent, but allows for a bit more precision and recall. 
 # %%
+#Visualizing the unbalanced data
 def new_status(row):
     status = row["status"]
     if status == "single": return "No"
