@@ -153,9 +153,9 @@ full_split1.fit(x_train, y_train)
 y_pred1 = full_split1.predict(x_test)
 full_split1.score(x_test, y_test)
 
-print('score (train):', full_split1.score(x_train, y_train)) # 0.006089919270939048
-print('score (test):', full_split1.score(x_test, y_test)) # 0.0017036426721409592
-print('intercept:', full_split1.intercept_) # 3.6214355401814764
+print('score (train):', full_split1.score(x_train, y_train)) 
+print('score (test):', full_split1.score(x_test, y_test)) 
+print('intercept:', full_split1.intercept_) 
 print('coef_:', full_split1.coef_)
 
 #%%
@@ -165,15 +165,17 @@ full_split1.fit(x_train1, y_train1)
 y_pred1 = full_split1.predict(x_test1)
 full_split1.score(x_test1, y_test1)
 
-print('score (train):', full_split1.score(x_train1, y_train1)) # 0.003827119512000543
-print('score (test):', full_split1.score(x_test1, y_test1)) # 0.00844962588161724
-print('intercept:', full_split1.intercept_) # 3.7002629124320943
+print('score (train):', full_split1.score(x_train1, y_train1)) 
+print('score (test):', full_split1.score(x_test1, y_test1)) 
+print('intercept:', full_split1.intercept_) 
 print('coef_:', full_split1.coef_)
 
 
 
 #%%
 from sklearn.linear_model import LogisticRegression
+
+
 
 logitr = LogisticRegression()  
 logitr.fit(x_train, y_train)
@@ -183,54 +185,29 @@ print('Logit model accuracy (with the train set):', logitr.score(x_train, y_trai
 print('Logit model accuracy (with the train set):', logitr.score(x_test1, y_test1))
 print('Logit model accuracy (with the train set):', logitr.score(x_train1, y_train1))
 
+
 print("\nReady to continue.")
+
 
 #%%
-print(logitr.predict(x_test))
-print(logitr.predict(x_test1))
+print(logitr.predict_proba(x_train[:2]))
+print(logitr.predict_proba(x_test[:2]))
 
 print("\nReady to continue.")
-
-#%%
-print(logitr.predict_proba(x_train[:5]))
-print(logitr.predict_proba(x_test[:5]))
-
-print("\nReady to continue.")
-
-#%%
-test = logitr.predict_proba(x_test)
-type(test)
-
-print("\nReady to continue.")
-
 # %%
+
+
 cut_off = 0.7
 predictions = (logitr.predict_proba(x_test)[:,1]>cut_off).astype(int)
 print(predictions)
 
-print("\nReady to continue.")
-
 #%%
-def predictcutoff(arr, cutoff):
-  arrbool = arr[:,1]>cutoff
-  arr= arr[:,1]*arrbool/arr[:,1]
-  return arr.astype(int)
-
-test = logitr.predict_proba(x_test)
-p = predictcutoff(test, 0.9)
-print(p)
-
-# print("\nReady to continue.")
-
-#%%
-
-predictcutoff(test, 0.5)
-
 # classification_report
 
 from sklearn.metrics import classification_report
 y_true, y_pred = y_test, logitr.predict(x_test)
 print(classification_report(y_true, y_pred))
+
 
 # %%
 x1data = df_dating[['drugs']]
@@ -267,6 +244,8 @@ print('coef_:', full_split1.coef_)
 
 #%%
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix 
+from sklearn.metrics import classification_report
 
 logitr_d = LogisticRegression()  
 logitr_d.fit(x1_train, y1_train)
@@ -276,8 +255,8 @@ print('Logit model accuracy (with the train set):', logitr_d.score(x1_train, y1_
 
 print(f'Logit model accuracy (with the test set): {logitr_d.score(x2_test1, y2_test1)}')
 print('Logit model accuracy (with the train set):', logitr_d.score(x2_train1, y2_train1))
-
-print("\nReady to continue.")
+print(confusion_matrix(y1_test, logitr_d.predict(x1_test)))
+print(classification_report(y1_test, logitr_d.predict(x1_test)))
 
 #%%
 print(logitr_d.predict(x1_test))
@@ -292,37 +271,15 @@ print(logitr_d.predict_proba(x1_test[:5]))
 
 print("\nReady to continue.")
 
-#%%
-test = logitr_d.predict_proba(x1_test)
-type(test)
-
-print("\nReady to continue.")
 
 # %%
+from sklearn.metrics import confusion_matrix 
+from sklearn.metrics import classification_report
 
 cut_off = 0.7
 predictions = (logitr_d.predict_proba(x1_test)[:,1]>cut_off).astype(int)
 print(predictions)
-
-print("\nReady to continue.")
-
-#%%
-def predictcutoff(arr, cutoff):
-  arrbool = arr[:,1]>cutoff
-  arr= arr[:,1]*arrbool/arr[:,1]
-  return arr.astype(int)
-
-test1 = logitr_d.predict_proba(x1_test)
-p = predictcutoff(test1, 0.9)
-print(p)
-
-# print("\nReady to continue.")
-
-#%%
-
-predictcutoff(test1, 0.5)
-
-# %%
-
+print(confusion_matrix(y1_test, y1_train))
+print(classification_report(y1_test, y1_train))
 
 # %%
