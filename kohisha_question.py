@@ -5,11 +5,6 @@
 #%%
 # NumPy
 
-<<<<<<< Updated upstream
-import re
-=======
-
->>>>>>> Stashed changes
 import numpy as np
 import pandas as pd
 from regex import B
