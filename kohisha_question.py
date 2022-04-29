@@ -5,11 +5,6 @@
 #%%
 # NumPy
 
-<<<<<<< Updated upstream
-import re
-=======
-
->>>>>>> Stashed changes
 import numpy as np
 import pandas as pd
 from regex import B
@@ -164,28 +159,17 @@ print('intercept:', full_split1.intercept_) # 3.6214355401814764
 print('coef_:', full_split1.coef_)
 
 #%%
-x_train1, x_test1, y_train1, y_test1 = train_test_split(xdata, ydata, random_state=1234 , test_size=0.2)
+x_train1, x_test1, y_train1, y_test1 = train_test_split(xdata, ydata, random_state=1234 , test_size=0.05)
 full_split1 = linear_model.LinearRegression() # new instance
 full_split1.fit(x_train1, y_train1)
 y_pred1 = full_split1.predict(x_test1)
 full_split1.score(x_test1, y_test1)
 
-print('score (train):', full_split1.score(x_train1, y_train1)) # 0.00354847998664809
-print('score (test):', full_split1.score(x_test1, y_test1)) # 0.005653206830862567
-print('intercept:', full_split1.intercept_) # 3.6890535363964876
+print('score (train):', full_split1.score(x_train1, y_train1)) # 0.003827119512000543
+print('score (test):', full_split1.score(x_test1, y_test1)) # 0.00844962588161724
+print('intercept:', full_split1.intercept_) # 3.7002629124320943
 print('coef_:', full_split1.coef_)
 
-#%%
-print('x_train type',type(x_train))
-print('x_trainshape',x_train.shape)
-print('x_test type',type(x_test))
-print('x_test shape',x_test.shape)
-print('y_train type',type(y_train))
-print('y_train shape',y_train.shape)
-print('y_test type',type(y_test))
-print('y_test shape',y_test.shape)
-
-print("\nReady to continue.")
 
 
 #%%
@@ -193,13 +177,17 @@ from sklearn.linear_model import LogisticRegression
 
 logitr = LogisticRegression()  
 logitr.fit(x_train, y_train)
+logitr.fit(x_train1, y_train1)
 print('Logit model accuracy (with the test set):', logitr.score(x_test, y_test))
 print('Logit model accuracy (with the train set):', logitr.score(x_train, y_train))
+print('Logit model accuracy (with the train set):', logitr.score(x_test1, y_test1))
+print('Logit model accuracy (with the train set):', logitr.score(x_train1, y_train1))
 
 print("\nReady to continue.")
 
 #%%
 print(logitr.predict(x_test))
+print(logitr.predict(x_test1))
 
 print("\nReady to continue.")
 
@@ -254,17 +242,27 @@ print(type(y1data))
 # %%
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, y1_train, y1_test = train_test_split(x1data, y1data, random_state=1 , test_size=0.50)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x1_train, y1_train)
+y_pred1 = full_split1.predict(x1_test)
+full_split1.score(x1_test, y1_test)
 
-print('x_train type',type(x1_train))
-print('x_trainshape',x1_train.shape)
-print('x_test type',type(x1_test))
-print('x_test shape',x1_test.shape)
-print('y_train type',type(y1_train))
-print('y_train shape',y1_train.shape)
-print('y_test type',type(y1_test))
-print('y_test shape',y1_test.shape)
+print('score (train):', full_split1.score(x1_train, y1_train)) # 0023100973484375675
+print('score (test):', full_split1.score(x1_test, y1_test)) # 0.001095211027081322
+print('intercept:', full_split1.intercept_) # 3.848879185046637
+print('coef_:', full_split1.coef_)
 
-print("\nReady to continue.")
+#%%
+x2_train1, x2_test1, y2_train1, y2_test1 = train_test_split(x1data, y1data, random_state=1234 , test_size=0.90)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x2_train1, y2_train1)
+y_pred1 = full_split1.predict(x2_test1)
+full_split1.score(x2_test1, y2_test1)
+
+print('score (train):', full_split1.score(x2_train1, y2_train1)) # 0.0032198745167399956
+print('score (test):', full_split1.score(x2_test1, y2_test1)) # -0.00034101283397536264
+print('intercept:', full_split1.intercept_) # 3.8798764612617305
+print('coef_:', full_split1.coef_)
 
 
 #%%
@@ -272,13 +270,19 @@ from sklearn.linear_model import LogisticRegression
 
 logitr_d = LogisticRegression()  
 logitr_d.fit(x1_train, y1_train)
+logitr_d.fit(x2_train1, y2_train1)
 print(f'Logit model accuracy (with the test set): {logitr_d.score(x1_test, y1_test)}')
 print('Logit model accuracy (with the train set):', logitr_d.score(x1_train, y1_train))
+
+print(f'Logit model accuracy (with the test set): {logitr_d.score(x2_test1, y2_test1)}')
+print('Logit model accuracy (with the train set):', logitr_d.score(x2_train1, y2_train1))
 
 print("\nReady to continue.")
 
 #%%
 print(logitr_d.predict(x1_test))
+print(logitr_d.predict(x2_test1))
+
 
 print("\nReady to continue.")
 
