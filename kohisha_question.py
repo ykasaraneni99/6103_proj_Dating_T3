@@ -241,6 +241,8 @@ print('Logit model accuracy (with the train set):', logitr_d.score(x2_train1, y2
 print(confusion_matrix(y1_test, logitr_d.predict(x1_test)))
 print(classification_report(y1_test, logitr_d.predict(x1_test)))
 
+# even though the p-values for body type and drugs is significant the accuracy of the model is very low.
+
 
 #%%
 print(logitr_d.predict_proba(x1_train[:2]))
@@ -260,3 +262,6 @@ print(confusion_matrix(y1_test, y1_train))
 print(classification_report(y1_test, y1_train))
 
 # %%
+
+# we can conclude that we cannot relate body type with smoke, drug, diet, drink accurately 
+# this arises from the facts that the data provided to an dating website maynot be 100% true and there are lots of missing values in the data.
