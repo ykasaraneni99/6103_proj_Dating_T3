@@ -153,8 +153,8 @@ print(classification_report(y_test1, linearsvc.predict(x_test1)))
 #Determining the 5-number summary of data 
 from numpy import percentile
 from numpy.random import rand
-predictedvalues = okcupid.status
-predictedvalues = rand(1000)
+predictedvalues = data_logit1.predict_proba(x_test1)
+# predictedvalues = rand(1000)
 data_min, data_max = predictedvalues.min(), predictedvalues.max()
 quartiles = percentile(predictedvalues, [25,50,75])
 print('Min: %.3f' % data_min)
