@@ -5,8 +5,10 @@
 #%%
 # NumPy
 
+import re
 import numpy as np
 import pandas as pd
+from regex import B
 
 dating = pd.read_csv("okcupid_profiles.csv")
 
@@ -35,7 +37,7 @@ new_data.dtypes
 new_dating_data = new_data.dropna()  
 
 #%%
-replace_ty={#'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
+replace_ty={'body_type':{"a little extra":1,"average":2,"athletic":3,"skinny":4,"thin":5, "fit":6, "curvy":7, "full":9,"full figured":10, "jacked":11, "overweight":12, "used up":13, "rather not say":14},
             'drinks':{'socially':1,"often":2,"not at all":3,"rarely":4, "very often":5, 'desperately' :6},
             'diet':{'strictly anything':1,'mostly other':2, 'mostly anything':3,'mostly vegetarian':4,'strictly vegan':5, 'anything':6, 'vegetarian':7, 'mostly halal':8, 'strictly vegetarian':9, 'other':10, 'strictly other': 11, 'vegan':12, 'mostly vegan':13, 'mostly kosher':14, 'strictly halal':15, 'halal':16, 'strictly kosher':17, 'kosher': 18},
             'drugs':{'never': 1, 'sometimes': 2, 'often': 3},
@@ -236,7 +238,7 @@ from sklearn.linear_model import LogisticRegression
 
 logitr_d = LogisticRegression()  
 logitr_d.fit(x1_train, y1_train)
-print('Logit model accuracy (with the test set):', logitr_d.score(x1_test, y1_test))
+print(f'Logit model accuracy (with the test set): {logitr_d.score(x1_test, y1_test)}')
 print('Logit model accuracy (with the train set):', logitr_d.score(x1_train, y1_train))
 
 print("\nReady to continue.")
@@ -259,6 +261,7 @@ type(test)
 print("\nReady to continue.")
 
 # %%
+
 cut_off = 0.7
 predictions = (logitr_d.predict_proba(x1_test)[:,1]>cut_off).astype(int)
 print(predictions)
@@ -281,5 +284,8 @@ print(p)
 #%%
 
 predictcutoff(test1, 0.5)
+
+# %%
+
 
 # %%
