@@ -5,28 +5,38 @@
 #%%
 # NumPy
 
+<<<<<<< Updated upstream
 import re
+=======
+
+>>>>>>> Stashed changes
 import numpy as np
 import pandas as pd
 from regex import B
 
+# loading the data set
 dating = pd.read_csv("okcupid_profiles.csv")
 
-
+#%%
 # dropping all the unrequired columns.
 new_data =dating.drop(['education','ethnicity','speaks','essay0','essay1','essay2','essay3','essay4','essay5','essay6','essay7','essay8','essay9','offspring','location','sign','pets','last_online','income',
 'job','last_online','religion','sign','orientation'], axis=1)
 print(new_data.head())
 
 #%%
+
+#checking if there are any misssing values and printing the sum
 new_data.isna().sum()
 #%%
+
+# making new data frame with dropped NA values
 new_data_a = new_data.dropna(thresh = 13, how = 'any')
 new_data_a.isna().sum()
 
-
+# viewing some basic statistical details like percentile, mean, std etc.
 new_data.describe()
 
+# Checking all varaiables datatypes
 new_data.dtypes
  
 
@@ -137,10 +147,35 @@ print(type(xdata))
 print(type(ydata))
 
 
-
+# model evaluation using train and test sets 
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 , test_size=0.75)
+from sklearn import linear_model
+from sklearn.linear_model import LogisticRegression
 
+x_train, x_test, y_train, y_test = train_test_split(xdata, ydata, random_state=1 , test_size=0.75)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x_train, y_train)
+y_pred1 = full_split1.predict(x_test)
+full_split1.score(x_test, y_test)
+
+print('score (train):', full_split1.score(x_train, y_train)) # 0.006089919270939048
+print('score (test):', full_split1.score(x_test, y_test)) # 0.0017036426721409592
+print('intercept:', full_split1.intercept_) # 3.6214355401814764
+print('coef_:', full_split1.coef_)
+
+#%%
+x_train1, x_test1, y_train1, y_test1 = train_test_split(xdata, ydata, random_state=1234 , test_size=0.2)
+full_split1 = linear_model.LinearRegression() # new instance
+full_split1.fit(x_train1, y_train1)
+y_pred1 = full_split1.predict(x_test1)
+full_split1.score(x_test1, y_test1)
+
+print('score (train):', full_split1.score(x_train1, y_train1)) # 0.00354847998664809
+print('score (test):', full_split1.score(x_test1, y_test1)) # 0.005653206830862567
+print('intercept:', full_split1.intercept_) # 3.6890535363964876
+print('coef_:', full_split1.coef_)
+
+#%%
 print('x_train type',type(x_train))
 print('x_trainshape',x_train.shape)
 print('x_test type',type(x_test))
@@ -191,7 +226,6 @@ print("\nReady to continue.")
 def predictcutoff(arr, cutoff):
   arrbool = arr[:,1]>cutoff
   arr= arr[:,1]*arrbool/arr[:,1]
-  # arr= arr[:,1]*arrbool
   return arr.astype(int)
 
 test = logitr.predict_proba(x_test)
@@ -272,7 +306,6 @@ print("\nReady to continue.")
 def predictcutoff(arr, cutoff):
   arrbool = arr[:,1]>cutoff
   arr= arr[:,1]*arrbool/arr[:,1]
-  # arr= arr[:,1]*arrbool
   return arr.astype(int)
 
 test1 = logitr_d.predict_proba(x1_test)
